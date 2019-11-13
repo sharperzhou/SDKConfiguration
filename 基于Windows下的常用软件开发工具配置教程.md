@@ -30,7 +30,7 @@
     PATH=%PATH%;D:\SDK\Git\cmd
     ```
 * 右键菜单   
-    ```
+    ```r
     [HKEY_CLASSES_ROOT\Directory\Background\shell\gitbash]
     @="Git Bash Here"
     "Icon"="D:\\SDK\\Git\\git-bash.exe"
@@ -68,7 +68,7 @@
     PATH=%PATH%;D:\SDK\node;D:\SDK\node\npm_modules
     ```
 * 配置npm
-    ```
+    ```js
     $ npm config set prefix "D:\SDK\node\npm_modules"
     $ npm config set cache "D:\SDK\node\npm_cache"
     $ npm config set registry https://registry.npm.taobao.org
@@ -90,11 +90,83 @@
     PATH=%PATH%;D:\SDK\Python\Python37;D:\SDK\Python\Python37\Scripts
     ```
 * 更新pip
-    ```
+    ```r
     $ python -m pip install --upgrade pip
     ```
 * 设置国内镜像
-    ```
+    ```r
     $ pip config set global.index-url "https://pypi.tuna.tsinghua.edu.cn/simple"
     ```
 
+### Qt
+* 官方下载地址：http://download.qt.io/official_releases/qt/ 
+* 国内镜像地址：https://mirrors.tuna.tsinghua.edu.cn/qt/official_releases/qt/ 
+* 解压位置，如 D:\SDK\Qt\5.9.7
+* 环境变量
+    ```
+    QTDIR=D:\SDK\Qt\5.9.7
+    QT_PLUGIN_PATH=%QTDIR%\plugins
+    PATH=%PATH%;%QTDIR%\bin
+    ```
+    > 注意：windows下必须设置plugin目录，否则编译后程序无法启动
+    > 如果使用QtCreator，因QtCreator中也存在plugin，可能与Qt中的plugin存在冲突，因此在QT_PLUGIN_PATH环境变量中还需要添加QtCreator的plugin目录，两者用分号分隔环境变量值
+
+### VSCode
+* 下载地址：https://code.visualstudio.com/#alt-downloads
+* 解压位置：D:\SDK\VSCode
+* 在任意文件显示右键菜单项
+    ```r
+    [HKEY_CLASSES_ROOT\*\shell\VSCode]
+    @="用 VSCode 打开"
+    "icon"="D:\\SDK\\VSCode\\Code.exe,0"
+
+    [HKEY_CLASSES_ROOT\*\shell\VSCode\command]
+    @="D:\\SDK\\VSCode\\Code.exe \"%1\""
+    ```
+
+* 在任意文件夹显示右键菜单项
+    ```r
+    [HKEY_CLASSES_ROOT\Directory\shell\VSCode]
+    @="用 VSCode 打开"
+    "icon"="D:\\SDK\\VSCode\\Code.exe,0"
+
+    [HKEY_CLASSES_ROOT\Directory\shell\VSCode\command]
+    @="D:\\SDK\\VSCode\\Code.exe \"%1\""
+    ```
+
+* 在文件夹内按shift显示右键菜单
+    ```r
+    [HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode]
+    @="用 VSCode 打开"
+    "icon"="D:\\SDK\\VSCode\\Code.exe,0"
+    "Extended"=""
+    "NoWorkingDirectory"=""
+
+    [HKEY_CLASSES_ROOT\Directory\Background\shell\VSCode\command]
+    @="D:\\SDK\\VSCode\\Code.exe \"%v\""
+    ```
+
+> 注意命令参数的区别，在文件或文件夹上显示右键菜单的命令参数为 ```%1``` ，在文件夹内显示的命令参数为 ```%v```  
+> 在文件夹内按shift键显示右键菜单需要设置名称为 **Extended** 和 **NoWorkingDirectory** 的数值项，如果直接右键显示则无需设置这两项
+
+### MySQL
+* 国内镜像地址：https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/
+* 解压位置，如 D:\SDK\MySQL
+* 环境变量
+```
+PATH=%PATH%;D:\SDK\MySQL\bin
+```
+* 配置过程
+  1. 在 **解压位置** 下新建 **my.ini** 文件，假定数据存储在 **data** 文件夹，设置如下配置
+```ini
+[mysql]
+default-character-set=utf8
+[mysqld]
+port=3306
+basedir="D:/SDK/MySQL"
+datadir="D:/SDK/MySQL/data"
+max_connections=200
+character-set-server=utf8
+default-storage-engine=INNODB
+```
+  2. 
