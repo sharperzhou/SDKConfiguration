@@ -153,20 +153,50 @@
 * 国内镜像地址：https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/
 * 解压位置，如 D:\SDK\MySQL
 * 环境变量
-```
-PATH=%PATH%;D:\SDK\MySQL\bin
-```
+    ```
+    PATH=%PATH%;D:\SDK\MySQL\bin
+    ```
 * 配置过程
   1. 在 **解压位置** 下新建 **my.ini** 文件，假定数据存储在 **data** 文件夹，设置如下配置
-```ini
-[mysql]
-default-character-set=utf8
-[mysqld]
-port=3306
-basedir="D:/SDK/MySQL"
-datadir="D:/SDK/MySQL/data"
-max_connections=200
-character-set-server=utf8
-default-storage-engine=INNODB
-```
-  2. 
+        ```ini
+        [mysql]
+        default-character-set=utf8
+        [mysqld]
+        port=3306
+        basedir="D:/SDK/MySQL"
+        datadir="D:/SDK/MySQL/data"
+        max_connections=200
+        character-set-server=utf8
+        default-storage-engine=INNODB
+        ```
+  2. 以 **管理员身份** 打开命令行工具，输入如下命令生成不带密码的root用户
+        ```
+        $ mysqld --initialize-insecure
+        ```
+        > 如果需要重新初始化，必须先清空data文件夹
+  3. 接着在命令行工具中 **安装** 并 **启动** 服务
+        ```
+        $ mysqld -install
+        $ net start mysql
+        ```
+        > 注意，停止及卸载服务命令为  
+        >    ```
+        >    $ net stop mysql
+        >    $ mysqld -remove
+        >    ```
+  4. 接着，无密码进入MySQL
+        ```
+        $ mysql -u root
+        ```
+  5. 登录后，为root账户设置密码，并开启远程登录
+        ```sql
+        use mysql; -- 切换至mysql数据库
+        update user set authentication_string=password('新密码') where user='root';  -- 修改新密码
+        update user set host='%' where user='root';  -- 授予远程访问权限
+        flush privileges;  -- 刷新数据库
+        exit; -- 退出数据库
+        ```
+  6. 退出数据库后，通过ip地址和密码登录，并指定登录端口号
+        ```
+        $ mysql -h 192.168.x.x -u root -p -P 3306
+        ```
