@@ -149,6 +149,66 @@
 > 注意命令参数的区别，在文件或文件夹上显示右键菜单的命令参数为 ```%1``` ，在文件夹内显示的命令参数为 ```%v```  
 > 在文件夹内按shift键显示右键菜单需要设置名称为 **Extended** 和 **NoWorkingDirectory** 的数值项，如果直接右键显示则无需设置这两项
 
+### vim
+* 下载地址：https://github.com/vim/vim-win32-installer/releases
+* 解压位置：D:\SDK\vim
+* 环境变量
+    ```
+    PATH=%PATH%;D:\SDK\vim
+    ```
+> 经过以上配置，可以初步使用vim，在命令行中输入vim或gvim就可以进行编辑。更高级的用法需要配置vimrc文件及插件。
+
+* 配置vimrc文件，使vim拥有语法高亮、出现行号及tab按空格缩进等功能
+  1. 打开powershell，输入如下命令
+        ```bash
+        $ vim ~/.vimrc
+        ```
+  2. 进入vim窗口，按键盘 `i` 进入 **编辑模式** ，此时可输入内容，按如下进行输入
+        ```vim
+        set number
+        syntax on
+        set tabstop=4
+        set shiftwidth=4
+        set expandtab
+        ```
+  3. 按键盘 `Esc` 退出 **编辑模式** ，再按键盘 `:` ，此时可在窗口左下角输入命令，输入 `wq` 会保存编辑并退出vim，返回powershell窗口
+
+* 安装插件管理器，推荐使用vim-plug插件
+  1. 打开powershell，输入如下命令在用户目录下新建目录
+        ```bash
+        $  mkdir -p ~/vimfiles/autoload
+        ```
+  2. 再次输入如下命令，下载 `plug.vim` 文件并放到 `autoload` 文件夹下
+        ```bash
+        $uri = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        (New-Object Net.WebClient).DownloadFile(
+            $uri,
+            $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath(
+                "~\vimfiles\autoload\plug.vim"
+            )
+        )
+        ```
+        > 该步骤操作完全可以在浏览器中输入地址：https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim ，手动下载该文件并放到对应的文件夹即可。
+  3. 配置vimrc文件，添加一个示例插件，用vim打开vimrc文件，在上一步骤中配置的.vimrc文件中附加如下内容
+        ```vim
+        " 指定插件存放的位置
+        call plug#begin('~/vimfiles/plugged')
+
+        " 所有插件必须plug#begin()和plug#end()所标记的区域内
+        " 每个插件以Plug命令开始，每行一个
+        " Plug后跟插件地址，每个地址使用单引号包裹
+
+        " 如下安装一个C++语法高亮插件
+        Plug 'octol/vim-cpp-enhanced-highlight'
+
+        call plug#end()
+        ```
+        > 推荐一个vim插件网站：https://vimawesome.com/ ，搜索想要的插件，网站会给出vim-plug类型的安装地址，拷贝至vimrc文件中对应的plug#begin()和plug#end()所标记的区域内
+
+  4. 保存vimrc文件，退出vim并重新加载vimrc文件，依次按 `Esc`，`:` 切换到vim的命令模式，然后输入 `PlugInstall` 安装实例插件，完成后可输入 `PlugStatus` 查看插件的状态。vim-plug的插件仓库为：https://github.com/junegunn/vim-plug ，在此可查看命令的说明及使用。
+
+
+
 ### MySQL
 * 国内镜像地址：https://mirrors.tuna.tsinghua.edu.cn/mysql/downloads/
 * 解压位置，如 D:\SDK\MySQL
