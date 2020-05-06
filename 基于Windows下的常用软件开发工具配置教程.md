@@ -251,11 +251,13 @@
   5. 登录后，为root账户设置密码，并开启远程登录
         ```sql
         use mysql; -- 切换至mysql数据库
-        update user set authentication_string=password('新密码') where user='root';  -- 修改新密码
+        update user set authentication_string=password('新密码') where user='root';  -- 修改新密码（mysql 5.7及以下版本使用）
+        alter user 'root'@'localhost' identified by '新密码';  -- 修改新密码（mysql 8.0及以上版本使用）
         update user set host='%' where user='root';  -- 授予远程访问权限
         flush privileges;  -- 刷新数据库
         exit; -- 退出数据库
         ```
+        > 注意，修改密码时需要根据MySQL版本来确定使用哪个sql语句
   6. 退出数据库后，通过ip地址和密码登录，并指定登录端口号
         ```
         $ mysql -h 192.168.x.x -u root -p -P 3306
