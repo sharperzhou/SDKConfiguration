@@ -41,8 +41,9 @@
     > 注意：路径中有空格必须用引号，command中命令和参数都需要引号，command的参数是```"--cd=%v."```
 
 ### Java
-* 下载地址：https://www.oracle.com/technetwork/java/javase/downloads/index.html
+* 下载地址1：https://www.oracle.com/technetwork/java/javase/downloads/index.html
     > 注意：官网提供的JDK是安装包，但可以将安装包的内容拷贝到其他计算机使用。
+* 下载地址2：https://adoptium.net/temurin/releases/
 * 解压位置，如 D:\SDK\Java\jdk1.8.0_191
 * 环境变量
     ```
@@ -52,8 +53,9 @@
     > 注意：目前主流版本的JDK不需要设置CLASSPATH这一环境变量。
 
 ### MinGW
-* 下载地址：https://sourceforge.net/projects/mingw-w64/files/
+* 下载地址1：https://sourceforge.net/projects/mingw-w64/files/
     > 32位系统建议下载 **i686-posix-dwarf** ，64位系统建议下载 **x86_64-posix-seh**
+* 下载地址2：https://winlibs.com
 * 解压位置，如 D:\SDK\MinGW\x86_64-posix-seh-8.1.0
 * 环境变量
     ```
